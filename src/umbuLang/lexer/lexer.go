@@ -29,6 +29,9 @@ func New(input string) *Lexer {
 	return l
 }
 
+// readChar reads the next character from the input and advances the lexer positions.
+// If the end of the input is reached, it sets the current character to rune(0).
+// It updates the current character, the current position, and the read position.
 func (l *Lexer) readChar() {
 	if l.readPosition >= len(l.input) {
 		l.ch = rune(0)
@@ -42,55 +45,27 @@ func (l *Lexer) readChar() {
 	}
 }
 
-func (l *Lexer) NextToken() token.Token {
-	var tok token.Token
+// NextToco retrieves the next token from the input and advances the lexer.
+// It skips any whitespace and then checks the current character to determine
+// the type of token to generate. It handles multi-character tokens for equality
+// and inequality, single-character tokens for various operators and delimiters,
+// and identifiers and integers. If the character is not recognized, it returns
+// an MALFEITO token. The function returns the generated token.
+func (l *Lexer) NextToco() token.Toco {
+	var tok token.Toco
 
 	l.skipWhitespace()
 
 	switch l.ch {
 	case '=':
-		if l.peekChar() == '=' {
-			ch := l.ch
-			l.readChar()
-			tok = token.Token{Type: token.EQ, Literal: string(ch) + string(l.ch)}
-		} else {
-			tok = newToken(token.ASSIGN, l.ch)
-		}
-	case ';':
-		tok = newToken(token.SEMICOLON, l.ch)
-	case '(':
-		tok = newToken(token.LPAREN, l.ch)
-	case ')':
-		tok = newToken(token.RPAREN, l.ch)
-	case ',':
-		tok = newToken(token.COMMA, l.ch)
-	case '<':
-		tok = newToken(token.LT, l.ch)
-	case '>':
-		tok = newToken(token.GT, l.ch)
+		tok = l.readTwoCharToco('=', token.EQ, token.ASSIGN)
 	case '!':
-		if l.peekChar() == '=' {
-			ch := l.ch
-			l.readChar()
-			tok = token.Token{Type: token.NOT_EQ, Literal: string(ch) + string(l.ch)}
-		} else {
-			tok = newToken(token.BANG, l.ch)
-		}
-	case '/':
-		tok = newToken(token.SLASH, l.ch)
-	case '*':
-		tok = newToken(token.ASTERISK, l.ch)
-	case '+':
-		tok = newToken(token.PLUS, l.ch)
-	case '-':
-		tok = newToken(token.MINUS, l.ch)
-	case '{':
-		tok = newToken(token.LBRACE, l.ch)
-	case '}':
-		tok = newToken(token.RBRACE, l.ch)
+		tok = l.readTwoCharToco('=', token.NOT_EQ, token.BANG)
+	case ';', '(', ')', ',', '<', '>', '/', '*', '+', '-', '{', '}':
+		tok = newToco(l.lookupSingleCharTocoTipo(l.ch), l.ch)
 	case 0:
 		tok.Literal = ""
-		tok.Type = token.EOF
+		tok.Type = token.ESTIO
 	default:
 		if isLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
@@ -101,12 +76,64 @@ func (l *Lexer) NextToken() token.Token {
 			tok.Literal = l.readNumber()
 			return tok
 		} else {
-			tok = newToken(token.ILLEGAL, l.ch)
+			tok = newToco(token.MALFEITO, l.ch)
 		}
 	}
 
 	l.readChar()
 	return tok
+}
+
+// readTwoCharToco reads a token that can either be a single character token or a two-character token.
+// It checks if the next character matches the expectedNextChar. If it does, it returns a token of type twoCharType
+// with the literal value being the combination of the current character and the next character.
+// If the next character does not match the expectedNextChar, it returns a single character token of type singleCharType.
+//
+// Parameters:
+// - expectedNextChar: The rune that is expected to follow the current character to form a two-character token.
+// - twoCharType: The token type to return if the next character matches the expectedNextChar.
+// - singleCharType: The token type to return if the next character does not match the expectedNextChar.
+//
+// Returns:
+// - A token of type twoCharType if the next character matches the expectedNextChar, otherwise a token of type singleCharType.
+func (l *Lexer) readTwoCharToco(expectedNextChar rune, twoCharType, singleCharType token.TocoTipo) token.Toco {
+	if l.peekChar() == expectedNextChar {
+		ch := l.ch
+		l.readChar()
+		return token.Toco{Type: twoCharType, Literal: string(ch) + string(l.ch)}
+	}
+	return newToco(singleCharType, l.ch)
+}
+
+func (l *Lexer) lookupSingleCharTocoTipo(ch rune) token.TocoTipo {
+	switch ch {
+	case ';':
+		return token.SEMICOLON
+	case '(':
+		return token.LPAREN
+	case ')':
+		return token.RPAREN
+	case ',':
+		return token.COMMA
+	case '<':
+		return token.LT
+	case '>':
+		return token.GT
+	case '/':
+		return token.SLASH
+	case '*':
+		return token.ASTERISK
+	case '+':
+		return token.PLUS
+	case '-':
+		return token.MINUS
+	case '{':
+		return token.LBRACE
+	case '}':
+		return token.RBRACE
+	default:
+		return token.MALFEITO
+	}
 }
 
 func (l *Lexer) readIdentifier() string {
@@ -140,8 +167,8 @@ func (l *Lexer) skipWhitespace() {
 	}
 }
 
-func newToken(tokenType token.TokenType, ch rune) token.Token {
-	return token.Token{Type: tokenType, Literal: string(ch)}
+func newToco(tokenType token.TocoTipo, ch rune) token.Toco {
+	return token.Toco{Type: tokenType, Literal: string(ch)}
 }
 
 func isLetter(ch rune) bool {

@@ -6,47 +6,45 @@ import (
 	"umbuLang/token"
 )
 
-func TestNextToken(t *testing.T) {
+func TestNextToco(t *testing.T) {
 	input := `
-		seja five = 5;
-		seja ten = 10;
+		bote cinco = 5;
+		bote dez = 10;
 
-		seja add = fn(x, y) {
-		x + y;
-		};
+		bote soma = mandinga(x, y) { x + y; };
 
-		seja result = add(five, ten);
+		bote resultado = soma(cinco, dez);
 		!-/*5;
 		
 		5 < 10 > 5;
 
-		if (5 < 10) {
-			return true;
-		} else {
-			return false;
+		averigue (5 < 10) {
+			receba sinceridade;
+		} doutraforma {
+			receba fuxico;
 		}
 
 		10 == 10;
 		10 != 9;
 	`
 	tests := []struct {
-		expectedType    token.TokenType
+		expectedType    token.TocoTipo
 		expectedLiteral string
 	}{
-		{token.SEJA, "seja"},
-		{token.IDENT, "five"},
+		{token.BOTE, "bote"},
+		{token.IDENT, "cinco"},
 		{token.ASSIGN, "="},
 		{token.INT, "5"},
 		{token.SEMICOLON, ";"},
-		{token.SEJA, "seja"},
-		{token.IDENT, "ten"},
+		{token.BOTE, "bote"},
+		{token.IDENT, "dez"},
 		{token.ASSIGN, "="},
 		{token.INT, "10"},
 		{token.SEMICOLON, ";"},
-		{token.SEJA, "seja"},
-		{token.IDENT, "add"},
+		{token.BOTE, "bote"},
+		{token.IDENT, "soma"},
 		{token.ASSIGN, "="},
-		{token.FUNCTION, "fn"},
+		{token.MANDINGA, "mandinga"},
 		{token.LPAREN, "("},
 		{token.IDENT, "x"},
 		{token.COMMA, ","},
@@ -59,14 +57,14 @@ func TestNextToken(t *testing.T) {
 		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
 		{token.SEMICOLON, ";"},
-		{token.SEJA, "seja"},
-		{token.IDENT, "result"},
+		{token.BOTE, "bote"},
+		{token.IDENT, "resultado"},
 		{token.ASSIGN, "="},
-		{token.IDENT, "add"},
+		{token.IDENT, "soma"},
 		{token.LPAREN, "("},
-		{token.IDENT, "five"},
+		{token.IDENT, "cinco"},
 		{token.COMMA, ","},
-		{token.IDENT, "ten"},
+		{token.IDENT, "dez"},
 		{token.RPAREN, ")"},
 		{token.SEMICOLON, ";"},
 		{token.BANG, "!"},
@@ -81,21 +79,21 @@ func TestNextToken(t *testing.T) {
 		{token.GT, ">"},
 		{token.INT, "5"},
 		{token.SEMICOLON, ";"},
-		{token.IF, "if"},
+		{token.AVERIGUE, "averigue"},
 		{token.LPAREN, "("},
 		{token.INT, "5"},
 		{token.LT, "<"},
 		{token.INT, "10"},
 		{token.RPAREN, ")"},
 		{token.LBRACE, "{"},
-		{token.RETURN, "return"},
-		{token.TRUE, "true"},
+		{token.RECEBA, "receba"},
+		{token.SINCERIDADE, "sinceridade"},
 		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
-		{token.ELSE, "else"},
+		{token.DOUTRAFORMA, "doutraforma"},
 		{token.LBRACE, "{"},
-		{token.RETURN, "return"},
-		{token.FALSE, "false"},
+		{token.RECEBA, "receba"},
+		{token.FUXICO, "fuxico"},
 		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
 		{token.INT, "10"},
@@ -106,12 +104,12 @@ func TestNextToken(t *testing.T) {
 		{token.NOT_EQ, "!="},
 		{token.INT, "9"},
 		{token.SEMICOLON, ";"},
-		{token.EOF, ""},
+		{token.ESTIO, ""},
 	}
 	l := New(input)
 
 	for i, tt := range tests {
-		tok := l.NextToken()
+		tok := l.NextToco()
 		if tok.Type != tt.expectedType {
 			t.Fatalf("tests[%d] - tokentype wrong. expected=%q, got=%q",
 				i, tt.expectedType, tok.Type)

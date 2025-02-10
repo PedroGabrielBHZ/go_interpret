@@ -1,16 +1,16 @@
 package token
 
-type TokenType string
+type TocoTipo string
 
-type Token struct {
-	Type    TokenType
+type Toco struct {
+	Type    TocoTipo
 	Literal string
 }
 
 const (
-	// Special tokens
-	ILLEGAL = "ILLEGAL"
-	EOF     = "EOF"
+	// Tocos especiais
+	MALFEITO = "MALFEITO"
+	ESTIO    = "ESTIO"
 
 	// Identifiers + literals
 	IDENT = "IDENT" // add, foobar, x, y, ...
@@ -37,26 +37,26 @@ const (
 	RBRACE    = "}"
 
 	// Keywords
-	FUNCTION = "FUNCTION"
-	SEJA     = "SEJA"
-	TRUE     = "TRUE"
-	FALSE    = "FALSE"
-	IF       = "IF"
-	ELSE     = "ELSE"
-	RETURN   = "RETURN"
+	MANDINGA    = "MANDINGA"
+	BOTE        = "BOTE"
+	SINCERIDADE = "SINCERIDADE"
+	FUXICO      = "FUXICO"
+	AVERIGUE    = "AVERIGUE"
+	DOUTRAFORMA = "DOUTRAFORMA"
+	RECEBA      = "RECEBA"
 )
 
-var keywords = map[string]TokenType{
-	"fn":     FUNCTION,
-	"seja":   SEJA,
-	"true":   TRUE,
-	"false":  FALSE,
-	"if":     IF,
-	"else":   ELSE,
-	"return": RETURN,
+var keywords = map[string]TocoTipo{
+	"mandinga":    MANDINGA,
+	"bote":        BOTE,
+	"sinceridade": SINCERIDADE,
+	"fuxico":      FUXICO,
+	"averigue":    AVERIGUE,
+	"doutraforma": DOUTRAFORMA,
+	"receba":      RECEBA,
 }
 
-func LookupIdent(ident string) TokenType {
+func LookupIdent(ident string) TocoTipo {
 	if tok, ok := keywords[ident]; ok {
 		return tok
 	}
