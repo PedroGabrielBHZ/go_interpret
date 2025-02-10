@@ -1,4 +1,4 @@
-package ast
+package arbusteiro
 
 import "umbuLang/toco"
 
