@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/user"
-	"umbuLang/repl"
+	"umbuLang/repente"
 )
 
 func main() {
@@ -14,5 +14,5 @@ func main() {
 	}
 	fmt.Printf("Hello %s. This is the umbuLang Programming Language.\n", user.Username)
 	fmt.Print("Type in any command.\n")
-	repl.Start(os.Stdin, os.Stdout)
+	repente.Start(os.Stdin, os.Stdout)
 }

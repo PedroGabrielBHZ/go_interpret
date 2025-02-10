@@ -1,4 +1,4 @@
-package token
+package toco
 
 type TocoTipo string
 
