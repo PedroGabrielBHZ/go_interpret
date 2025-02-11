@@ -1,14 +1,14 @@
-package toco
+package pontilha
 
-type TocoTipo string
+type PontilhaTipo string
 
-type Toco struct {
-	Type    TocoTipo
+type Pontilha struct {
+	Type    PontilhaTipo
 	Literal string
 }
 
 const (
-	// Tocos especiais
+	// Pontilhas especiais
 	MALFEITO = "MALFEITO"
 	ESTIO    = "ESTIO"
 
@@ -46,7 +46,7 @@ const (
 	RECEBA      = "RECEBA"
 )
 
-var keywords = map[string]TocoTipo{
+var keywords = map[string]PontilhaTipo{
 	"mandinga":    MANDINGA,
 	"bote":        BOTE,
 	"sinceridade": SINCERIDADE,
@@ -56,7 +56,7 @@ var keywords = map[string]TocoTipo{
 	"receba":      RECEBA,
 }
 
-func LookupIdent(ident string) TocoTipo {
+func LookupIdent(ident string) PontilhaTipo {
 	if tok, ok := keywords[ident]; ok {
 		return tok
 	}

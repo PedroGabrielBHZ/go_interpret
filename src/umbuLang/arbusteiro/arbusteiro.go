@@ -1,9 +1,9 @@
 package arbusteiro
 
-import "umbuLang/toco"
+import "umbuLang/pontilha"
 
 type Caroço interface {
-	TocoLiteral() string
+	PontilhaLiteral() string
 }
 
 type Sentença interface {
@@ -20,27 +20,27 @@ type Causo struct {
 	Sentenças []Sentença
 }
 
-func (c *Causo) TocoLiteral() string {
+func (c *Causo) PontilhaLiteral() string {
 	if len(c.Sentenças) > 0 {
-		return c.Sentenças[0].TocoLiteral()
+		return c.Sentenças[0].PontilhaLiteral()
 	} else {
 		return ""
 	}
 }
 
 type BoteSentença struct {
-	toco.Toco
+	pontilha.Pontilha
 	Nome  *Identificador
 	Valor Calculação
 }
 
-func (bs *BoteSentença) caroçoSentença()     {}
-func (bs *BoteSentença) TocoLiteral() string { return bs.Toco.Literal }
+func (bs *BoteSentença) caroçoSentença()         {}
+func (bs *BoteSentença) PontilhaLiteral() string { return bs.Pontilha.Literal }
 
 type Identificador struct {
-	Toco  toco.Toco
-	Valor string
+	Pontilha pontilha.Pontilha
+	Valor    string
 }
 
-func (i *Identificador) caroçoCalculação()   {}
-func (i *Identificador) TocoLiteral() string { return i.Toco.Literal }
+func (i *Identificador) caroçoCalculação()       {}
+func (i *Identificador) PontilhaLiteral() string { return i.Pontilha.Literal }
