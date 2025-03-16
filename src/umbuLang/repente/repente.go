@@ -4,8 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"umbuLang/ciscador"
-	"umbuLang/pontilha"
+	"umbuLang/lexer"
+	"umbuLang/token"
 )
 
 const PROMPT = ">>"
@@ -21,9 +21,9 @@ func Start(in io.Reader, out io.Writer) {
 		}
 
 		line := scanner.Text()
-		l := ciscador.New(line)
+		l := lexer.New(line)
 
-		for tok := l.NextPontilha(); tok.Type != pontilha.ESTIO; tok = l.NextPontilha() {
+		for tok := l.NextToken(); tok.Type != token.ESTIO; tok = l.NextToken() {
 			fmt.Printf("%+v\n", tok)
 		}
 	}

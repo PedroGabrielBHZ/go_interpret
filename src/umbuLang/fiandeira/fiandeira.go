@@ -2,29 +2,29 @@ package fiandeira
 
 import (
 	"umbuLang/arbusteiro"
-	"umbuLang/ciscador"
-	"umbuLang/pontilha"
+	"umbuLang/lexer"
+	"umbuLang/token"
 )
 
 type Fiandeira struct {
-	c *ciscador.Catador
+	c *lexer.Lexer
 
-	pontilhaAtual pontilha.Pontilha
-	pontilhaEspia pontilha.Pontilha
+	TokenAtual token.Token
+	TokenEspia token.Token
 }
 
-func New(c *ciscador.Catador) *Fiandeira {
+func New(c *lexer.Lexer) *Fiandeira {
 	f := &Fiandeira{c: c}
 
-	f.pontilhaSeguinte()
-	f.pontilhaSeguinte()
+	f.TokenSeguinte()
+	f.TokenSeguinte()
 
 	return f
 }
 
-func (f *Fiandeira) pontilhaSeguinte() {
-	f.pontilhaAtual = f.pontilhaEspia
-	f.pontilhaEspia = f.c.NextPontilha()
+func (f *Fiandeira) TokenSeguinte() {
+	f.TokenAtual = f.TokenEspia
+	f.TokenEspia = f.c.NextToken()
 }
 
 func (f *Fiandeira) FiaCauso() *arbusteiro.Causo {
