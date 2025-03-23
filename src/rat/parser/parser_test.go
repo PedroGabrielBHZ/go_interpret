@@ -1,9 +1,9 @@
 package parser
 
 import (
+	"rat/ast"
+	"rat/lexer"
 	"testing"
-	"umbuLang/ast"
-	"umbuLang/lexer"
 )
 
 func TestLetStatements(t *testing.T) {

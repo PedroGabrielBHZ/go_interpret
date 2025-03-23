@@ -2,9 +2,9 @@ package parser
 
 import (
 	"fmt"
-	"umbuLang/ast"
-	"umbuLang/lexer"
-	"umbuLang/token"
+	"rat/ast"
+	"rat/lexer"
+	"rat/token"
 )
 
 type Parser struct {

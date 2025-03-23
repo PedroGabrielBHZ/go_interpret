@@ -3,7 +3,7 @@ package lexer
 import (
 	"testing"
 
-	"umbuLang/token"
+	"rat/token"
 )
 
 func TestNextToken(t *testing.T) {

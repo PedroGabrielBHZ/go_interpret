@@ -1,7 +1,7 @@
 package lexer
 
 import (
-	"umbuLang/token"
+	"rat/token"
 	"unicode"
 	"unicode/utf8"
 )

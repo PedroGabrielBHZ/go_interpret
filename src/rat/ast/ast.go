@@ -1,6 +1,6 @@
 package ast
 
-import "umbuLang/token"
+import "rat/token"
 
 type Node interface {
 	TokenLiteral() string
