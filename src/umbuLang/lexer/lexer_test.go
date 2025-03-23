@@ -8,43 +8,43 @@ import (
 
 func TestNextToken(t *testing.T) {
 	input := `
-		bote cinco = 5;
-		bote dez = 10;
+        let five = 5;
+        let ten = 10;
 
-		bote soma = mandinga(x, y) { x + y; };
+        let add = fn(x, y) { x + y; };
 
-		bote resultado = soma(cinco, dez);
-		!-/*5;
+        let result = add(five, ten);
+        !-/*5;
 
-		5 < 10 > 5;
+        5 < 10 > 5;
 
-		averigue (5 < 10) {
-			receba sinceridade;
-		} doutraforma {
-			receba fuxico;
-		}
+        if (5 < 10) {
+            return true;
+        } else {
+            return false;
+        }
 
-		10 == 10;
-		10 != 9;
-	`
+        10 == 10;
+        10 != 9;
+    `
 	tests := []struct {
 		expectedType    token.TokenType
 		expectedLiteral string
 	}{
-		{token.LET, "bote"},
-		{token.IDENT, "cinco"},
+		{token.LET, "let"},
+		{token.IDENT, "five"},
 		{token.ASSIGN, "="},
 		{token.INT, "5"},
 		{token.SEMICOLON, ";"},
-		{token.LET, "bote"},
-		{token.IDENT, "dez"},
+		{token.LET, "let"},
+		{token.IDENT, "ten"},
 		{token.ASSIGN, "="},
 		{token.INT, "10"},
 		{token.SEMICOLON, ";"},
-		{token.LET, "bote"},
-		{token.IDENT, "soma"},
+		{token.LET, "let"},
+		{token.IDENT, "add"},
 		{token.ASSIGN, "="},
-		{token.FUNCTION, "mandinga"},
+		{token.FUNCTION, "fn"},
 		{token.LPAREN, "("},
 		{token.IDENT, "x"},
 		{token.COMMA, ","},
@@ -57,14 +57,14 @@ func TestNextToken(t *testing.T) {
 		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
 		{token.SEMICOLON, ";"},
-		{token.LET, "bote"},
-		{token.IDENT, "resultado"},
+		{token.LET, "let"},
+		{token.IDENT, "result"},
 		{token.ASSIGN, "="},
-		{token.IDENT, "soma"},
+		{token.IDENT, "add"},
 		{token.LPAREN, "("},
-		{token.IDENT, "cinco"},
+		{token.IDENT, "five"},
 		{token.COMMA, ","},
-		{token.IDENT, "dez"},
+		{token.IDENT, "ten"},
 		{token.RPAREN, ")"},
 		{token.SEMICOLON, ";"},
 		{token.BANG, "!"},
@@ -79,21 +79,21 @@ func TestNextToken(t *testing.T) {
 		{token.GT, ">"},
 		{token.INT, "5"},
 		{token.SEMICOLON, ";"},
-		{token.IF, "averigue"},
+		{token.IF, "if"},
 		{token.LPAREN, "("},
 		{token.INT, "5"},
 		{token.LT, "<"},
 		{token.INT, "10"},
 		{token.RPAREN, ")"},
 		{token.LBRACE, "{"},
-		{token.RETURN, "receba"},
-		{token.TRUE, "sinceridade"},
+		{token.RETURN, "return"},
+		{token.TRUE, "true"},
 		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
-		{token.ELSE, "doutraforma"},
+		{token.ELSE, "else"},
 		{token.LBRACE, "{"},
-		{token.RETURN, "receba"},
-		{token.FALSE, "fuxico"},
+		{token.RETURN, "return"},
+		{token.FALSE, "false"},
 		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
 		{token.INT, "10"},
@@ -104,7 +104,7 @@ func TestNextToken(t *testing.T) {
 		{token.NOT_EQ, "!="},
 		{token.INT, "9"},
 		{token.SEMICOLON, ";"},
-		{token.ESTIO, ""},
+		{token.EOF, ""},
 	}
 	l := New(input)
 

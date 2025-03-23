@@ -46,7 +46,7 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(l.lookupSingleCharTokenType(l.ch), l.ch)
 	case 0:
 		tok.Literal = ""
-		tok.Type = token.ESTIO
+		tok.Type = token.EOF
 	default:
 		if isLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
@@ -57,7 +57,7 @@ func (l *Lexer) NextToken() token.Token {
 			tok.Literal = l.readNumber()
 			return tok
 		} else {
-			tok = newToken(token.MALFEITO, l.ch)
+			tok = newToken(token.ILLEGAL, l.ch)
 		}
 	}
 
@@ -101,7 +101,7 @@ func (l *Lexer) lookupSingleCharTokenType(ch rune) token.TokenType {
 	case '}':
 		return token.RBRACE
 	default:
-		return token.MALFEITO
+		return token.ILLEGAL
 	}
 }
 

@@ -8,9 +8,9 @@ type Token struct {
 }
 
 const (
-	// Tokens especiais
-	MALFEITO = "MALFEITO"
-	ESTIO    = "ESTIO"
+	// Special tokens
+	ILLEGAL = "ILLEGAL"
+	EOF     = "EOF"
 
 	// Identifiers + literals
 	IDENT = "IDENT" // add, foobar, x, y, ...
@@ -47,13 +47,13 @@ const (
 )
 
 var keywords = map[string]TokenType{
-	"mandinga":    FUNCTION,
-	"bote":        LET,
-	"sinceridade": TRUE,
-	"fuxico":      FALSE,
-	"averigue":    IF,
-	"doutraforma": ELSE,
-	"receba":      RETURN,
+	"fn":     FUNCTION,
+	"let":    LET,
+	"true":   TRUE,
+	"false":  FALSE,
+	"if":     IF,
+	"else":   ELSE,
+	"return": RETURN,
 }
 
 func LookupIdent(ident string) TokenType {
